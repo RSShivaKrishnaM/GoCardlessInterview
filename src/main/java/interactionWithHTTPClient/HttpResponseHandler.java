@@ -1,5 +1,9 @@
 package interactionWithHTTPClient;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import jsonParser.JsonParserClass;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
@@ -22,5 +26,22 @@ public class HttpResponseHandler {
         }
 
         return response;
+    }
+
+
+
+    public JsonNode getJsonNode(URI url) {
+        HttpResponseHandler httpResponseHandler = new HttpResponseHandler();
+        String response = httpResponseHandler.performHttpReqRes(url);
+        JsonNode jsonNode = null;
+        if (response != null) {
+            JsonParserClass jsonParserClass = new JsonParserClass();
+            try {
+                jsonNode = jsonParserClass.parserTheJsonStr(response);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return jsonNode;
     }
 }

@@ -21,10 +21,11 @@ public class Main {
     private static final Map<String, Double> ibanToDues = new HashMap<>();
 
     public static void main(String[] args) {
+        HttpResponseHandler httpResponseHandler = new HttpResponseHandler();
         try {
-            JsonNode parentJsonNode = getJsonNode(new URI(url));
+            JsonNode parentJsonNode = httpResponseHandler.getJsonNode(new URI(url));
             for (int i = 0; i < parentJsonNode.size(); i++) {
-                JsonNode jsonNode = getJsonNode(new URI(url + "/" + parentJsonNode.get(i).asText()));
+                JsonNode jsonNode = httpResponseHandler.getJsonNode(new URI(url + "/" + parentJsonNode.get(i).asText()));
                 JsonNode transactionJsonNode = jsonNode.get("transactions");
                 JsonNode discountJsonNode = jsonNode.get("discount");
                 double paymentDues = 0.0;
@@ -66,18 +67,5 @@ public class Main {
   //sample
     }
 
-    private static JsonNode getJsonNode(URI url) {
-        HttpResponseHandler httpResponseHandler = new HttpResponseHandler();
-        String response = httpResponseHandler.performHttpReqRes(url);
-        JsonNode jsonNode = null;
-        if (response != null) {
-            JsonParserClass jsonParserClass = new JsonParserClass();
-            try {
-                jsonNode = jsonParserClass.parserTheJsonStr(response);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return jsonNode;
-    }
+
 }
