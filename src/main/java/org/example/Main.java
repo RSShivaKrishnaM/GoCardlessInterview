@@ -1,12 +1,10 @@
 package org.example;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import interactionWithHTTPClient.HttpResponseHandler;
-import jsonParser.JsonParserClass;
 
 import java.io.File;
 import java.io.IOException;
